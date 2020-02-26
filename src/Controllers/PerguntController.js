@@ -8,12 +8,9 @@ module.exports = {
     },
 
     async show(req , res){
-        try{
             const pergunta = await Pergunta.findByPk(req.params.id);
             return res.json(pergunta)
-        }catch(err){
-            return res.json(400).json({error : err.message});
-        }
+
     },
 
     async store(req , res){
@@ -21,15 +18,20 @@ module.exports = {
 
         return res.json(pergunta);
     },
+    async update(req , res) {
+        var pergunta = await Pergunta.findByPk(req.params.id);
+        await pergunta.update(req.body)
+
+        return res.json(pergunta);
+    },
+
     async destroy(req , res){
-        try{
+
+    
             var pergunta = await Pergunta.findByPk(req.params.id);
 
             await pergunta.destroy();
 
             return res.json(pergunta)
-        }catch(err){
-            return res.status(400).json({ error: error.message});
-        }
     }
 }
